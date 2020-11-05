@@ -3,6 +3,8 @@ package com.springframework.spring5restmvc.controllers.v1;
 import com.springframework.spring5restmvc.api.v1.model.CustomerDTO;
 import com.springframework.spring5restmvc.api.v1.model.CustomerListDTO;
 import com.springframework.spring5restmvc.services.CustomerService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
+@Api("This is my Customer Controller")
 @Controller
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -29,6 +29,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    @ApiOperation(value = "This will get a list of customers.",notes = "These are some notes.")
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers(){
         return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK);
