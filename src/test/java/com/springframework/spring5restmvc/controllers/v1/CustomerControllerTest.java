@@ -2,6 +2,7 @@ package com.springframework.spring5restmvc.controllers.v1;
 
 import com.springframework.spring5restmvc.api.v1.model.CustomerDTO;
 import com.springframework.spring5restmvc.services.CustomerService;
+import com.springframework.spring5restmvc.services.ResourceNotFoundException;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,9 @@ public class CustomerControllerTest extends AbstractRestControllerTest  {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(customerController)
+                .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                .build();
     }
 
     @Test
@@ -153,9 +156,20 @@ public class CustomerControllerTest extends AbstractRestControllerTest  {
     @Test
     public void testDeleteCustomer() throws Exception {
 
-        mockMvc.perform(delete( "/api/v1/customers/1")
+        mockMvc.perform(delete(CustomerController.BASE_URL + "/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
         verify(customerService).deleteCustomerById(anyLong());
+    }
+
+    @Test
+    public void testNotFoundException() throws Exception {
+
+        when(customerService.getCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
+
+        mockMvc.perform(get(CustomerController.BASE_URL + "/222")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }
