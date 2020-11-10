@@ -1,7 +1,7 @@
 package com.springframework.spring5restmvc.controllers.v1;
 
-import com.springframework.spring5restmvc.api.v1.model.CustomerDTO;
-import com.springframework.spring5restmvc.api.v1.model.CustomerListDTO;
+import com.springframework.model.CustomerDTO;
+import com.springframework.model.CustomerListDTO;
 import com.springframework.spring5restmvc.services.CustomerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,9 @@ public class CustomerController {
     @ApiOperation(value = "This will get a list of customers.",notes = "These are some notes.")
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers(){
-        return new ResponseEntity<CustomerListDTO>(new CustomerListDTO(customerService.getAllCustomers()), HttpStatus.OK);
+        CustomerListDTO list = new CustomerListDTO();
+        list.getCustomers().addAll(customerService.getAllCustomers());
+        return new ResponseEntity<CustomerListDTO>(list, HttpStatus.OK);
     }
 
     @GetMapping({"{id}"})

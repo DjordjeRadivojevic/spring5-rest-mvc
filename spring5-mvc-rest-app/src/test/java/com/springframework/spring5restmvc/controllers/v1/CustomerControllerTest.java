@@ -1,9 +1,8 @@
 package com.springframework.spring5restmvc.controllers.v1;
 
-import com.springframework.spring5restmvc.api.v1.model.CustomerDTO;
+import com.springframework.model.CustomerDTO;
 import com.springframework.spring5restmvc.services.CustomerService;
 import com.springframework.spring5restmvc.services.ResourceNotFoundException;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -98,7 +97,7 @@ public class CustomerControllerTest extends AbstractRestControllerTest  {
         returnDTO.setLastName(customer.getLastName());
         returnDTO.setCustomerUrl("/api/v1/customers/1");
 
-        when(customerService.createNewCustomer(customer)).thenReturn(returnDTO);
+        when(customerService.createNewCustomer(any())).thenReturn(returnDTO);
 
         //when/then
         mockMvc.perform(post("/api/v1/customers/")

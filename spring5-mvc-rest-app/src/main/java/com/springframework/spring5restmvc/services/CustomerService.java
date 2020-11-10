@@ -1,6 +1,6 @@
 package com.springframework.spring5restmvc.services;
 
-import com.springframework.spring5restmvc.api.v1.model.CustomerDTO;
+import com.springframework.model.CustomerDTO;
 
 import java.util.List;
 

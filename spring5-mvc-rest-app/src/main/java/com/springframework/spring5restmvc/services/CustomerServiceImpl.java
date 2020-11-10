@@ -1,7 +1,8 @@
 package com.springframework.spring5restmvc.services;
 
+import com.springframework.model.CustomerDTO;
 import com.springframework.spring5restmvc.api.v1.mapper.CustomerMapper;
-import com.springframework.spring5restmvc.api.v1.model.CustomerDTO;
+
 import com.springframework.spring5restmvc.domain.Customer;
 import com.springframework.spring5restmvc.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
